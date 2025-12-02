@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 import json
 import os
 import string
@@ -40,6 +40,17 @@ def home():
         return f"Short URL created: <b>{code}</b>"
 
     return render_template("home.html")
+
+#function to redirect route
+@app.route("/<code>")
+def redirect_to_url(code):
+    data = load_data()
+    url = data.get(code)
+
+    if url:
+        return redirect(url)
+    else:
+        return "Short URL not found", 404
 
 if __name__ == "__main__":
     app.run(debug=True)
