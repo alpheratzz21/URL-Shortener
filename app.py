@@ -36,8 +36,10 @@ def home():
         data[code] = original_url
         save_data(data)
 
+        short_url = request.host_url + code
+
         #return result page later ->> just display row
-        return f"Short URL created: <b>{code}</b>"
+        return render_template("result.html", code=code, short_url=short_url)
 
     return render_template("home.html")
 
