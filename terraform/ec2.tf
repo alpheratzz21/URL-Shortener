@@ -66,7 +66,7 @@ chmod +x /home/ubuntu/URL-Shortener/venv/bin/gunicorn
 cp /home/ubuntu/URL-Shortener/nginx/flask.conf /etc/nginx/sites-available/flask.conf
 ln -s /etc/nginx/sites-available/flask.conf /etc/nginx/sites-enabled/flask.conf
 rm -f /etc/nginx/sites-enabled/default
-systemctl restart nginx.service
+sudo systemctl restart nginx.service
 
 #gunicorn systemd
 
@@ -85,7 +85,7 @@ ExecStart=/home/ubuntu/URL-Shortener/venv/bin/gunicorn --workers 3 -b 127.0.0.1:
 WantedBy=multi-user.target
 EOT
 
-systemctl daemon-reload
+sudo systemctl daemon-reload
 systemctl enable gunicorn.service
 systemctl start gunicorn.service
 EOF
