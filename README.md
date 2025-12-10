@@ -1,50 +1,35 @@
-#URL Shortener – Flask, Nginx, Gunicorn, Terraform, GitHub Actions
+# URL Shortener – Flask, Nginx, Gunicorn, Terraform, GitHub Actions
 
-A simple URL Shortener application built with Flask. This project demonstrates how to deploy a Python web application to AWS EC2 using Terraform for infrastructure provisioning and GitHub Actions for CI/CD automation.
+A simple URL Shortener application built with Flask. This project demonstrates how to deploy a Python web application on **AWS EC2** using **Terraform (IaC)** and **GitHub Actions (CI/CD)**.
 
-Features
+### Features
+- Shortens long URLs into compact short links
+- Stores URL mappings in a JSON file
+- **Nginx** reverse proxy with Gunicorn WSGI server
+- Automated deployment with GitHub Actions
+- Infrastructure as Code with Terraform
 
-Shortens long URLs into compact short links
+### Tech Stack
 
-Stores data in a JSON file
+* Python 3 (Flask)
+* Gunicorn
+* Nginx
+* AWS EC2 (Ubuntu 22.04)
+* Terraform
+* GitHub Actions
+* Git
 
-Nginx reverse proxy with Gunicorn WSGI server
+### System Architecture
 
-Automated deployment using GitHub Actions
-
-Infrastructure as Code using Terraform
-
-Tech Stack
-
-Python 3, Flask
-
-Gunicorn
-
-Nginx
-
-AWS EC2 (Ubuntu 22.04)
-
-Terraform
-
-GitHub Actions
-
-Git
-
-System Architecture
-
-User sends HTTP request to EC2 instance (port 80).
-
-Nginx receives the request and proxies it to Gunicorn.
-
-Gunicorn runs the Flask application.
-
-Flask reads and writes data via storage.json.
-
-Terraform provisions EC2 instance, security group, and key pair.
-
-GitHub Actions automates updates whenever new code is pushed.
-
-Repository Structure
+1. User sends a request to the EC2 instance (port 80).
+2. Nginx receives the request and forwards it to Gunicorn.
+3. Gunicorn runs the Flask application.
+4. Flask reads/writes URL mappings from storage.json.
+5. Terraform provisions EC2, security groups, and key pairs.
+6. GitHub Actions deploys updates automatically on every push.
+   
+### Repository Structure
+```
 URL-Shortener/
 │
 ├── app.py
@@ -59,96 +44,37 @@ URL-Shortener/
     ├── keypair.tf
     ├── security-group.tf
     └── outputs.tf
+```
+### Deploying with Terraform
+1. Go to the Terraform directory
+```cd terraform```
 
-Deploying with Terraform
+2. Initialize Terraform
+```terraform init```
 
-Enter the terraform directory
+3. Preview the changes
+```terraform plan```
 
-cd terraform
+4. Deploy infrastructure
+```terraform apply```
+5. When finished, Terraform will output the EC2 public IP address.
 
+### CI/CD with GitHub Actions
+Required GitHub Secrets
+* **EC2_HOST** – EC2 public IP
+* **EC2_USER** – usually ubuntu
+* **EC2_SSH_KEY** – private key contents
+* **EC2_APP_PATH** – example: ```/home/ubuntu/URL-Shortener```
 
-Initialize Terraform
+### Workflow Summary
 
-terraform init
+1. Triggered on every push to the main branch
+2. GitHub Actions SSHs into EC2
+3. Pulls updated code
 
-
-Preview changes
-
-terraform plan
-
-
-Deploy resources
-
-terraform apply
-
-
-After deployment, the EC2 public IP will be shown in the output.
-
-CI/CD with GitHub Actions
-Setup
-
-Add these GitHub repository secrets:
-
-EC2_HOST
-
-EC2_USER (ex: ubuntu)
-
-EC2_SSH_KEY (private key contents)
-
-EC2_APP_PATH (ex: /home/ubuntu/URL-Shortener)
-
-Workflow Summary
-
-Triggered on every push to main
-
-GitHub Actions connects to EC2 via SSH
-
-Pulls latest code
-
-Installs dependencies
-
-Restarts Gunicorn service
-
-Files You Should Not Upload to GitHub
-
-Private keys (*.pem)
-
-terraform.tfstate and terraform.tfstate.backup
-
-.ssh/ directory
-
-Environment variables or sensitive config files
-
-Credentials, tokens, or logs with private information
-
-Minimum Terraform Files Required for Deployment
-
-main.tf
-
-variables.tf
-
-security-group.tf
-
-keypair.tf (optional if key already exists)
-
-outputs.tf
-
-Suggested Screenshots for Portfolio or CV
-
-Application UI
-
-Terraform apply output
-
-AWS EC2 instance running
-
-Nginx running (systemctl status)
-
-Gunicorn running
-
-GitHub Actions successful workflow
-
-Browser test of short URL
-
-License
-
+### License
 This project is free for personal use, study, and portfolio purposes.
+5. Installs dependencies
+6. Restarts Gunicorn service
+
+This project is free to use for learning and portfolio purposes.
