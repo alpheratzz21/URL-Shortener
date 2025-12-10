@@ -21,7 +21,7 @@ jobs:
     
     - name: Deploy to EC2 
       run: |
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/ec2_key ubuntu@18.141.138.103 "
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/ec2_key ${{secrets.EC2_USER}}@${{secrets.EC2_HOST}} "
           cd /home/ubuntu/URL-Shortener &&
           git pull &&
           source venv/bin/activate &&
